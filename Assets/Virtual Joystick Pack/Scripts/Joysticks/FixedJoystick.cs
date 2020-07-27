@@ -6,6 +6,9 @@ public class FixedJoystick : Joystick
     Vector2 joystickPosition = Vector2.zero;
     private Camera cam = new Camera();
 
+    //adding boolean to check if the joystick should stay in its place
+    public bool FreezeJoystickPos;
+
     void Start()
     {
         joystickPosition = RectTransformUtility.WorldToScreenPoint(cam, background.position);
@@ -26,7 +29,10 @@ public class FixedJoystick : Joystick
 
     public override void OnPointerUp(PointerEventData eventData)
     {
-        inputVector = Vector2.zero;
-        handle.anchoredPosition = Vector2.zero;
+        if (!FreezeJoystickPos)
+        {
+            inputVector = Vector2.zero;
+            handle.anchoredPosition = Vector2.zero;
+        }
     }
 }
