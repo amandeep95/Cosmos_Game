@@ -3,18 +3,6 @@ using System.Collections;
 
 public class Speedometer : MonoBehaviour {
 
-	/*
-		Andreas B. O. 08-Dec-2013 : Andreasboost98@gmail.com
-		You are allowed to use this in your own project. Personal and commercial use.
-		I would appreciate a donation, if you deside to use this code.
-
-		https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=KRDHH9LRTUEBQ
-
-		http://forum.unity3d.com/members/118057-AndreasX12
-
-	*/
-
-
 	public Texture2D speedometer_main_tex;
 	public Texture2D speedometer_needle_tex;
 
