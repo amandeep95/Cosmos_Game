@@ -17,6 +17,9 @@ public class PlayerHealthBar : MonoBehaviour
     public static float curHP; // current HP
     public static float maxHP; // maximum HP
 
+    //public values for health bar position and height
+    public int PosX, PosY, PosHeight;
+
     void Start()
     {
         curHP -= 0; // drain the current HP to test the health (Assign a value to drain the health)
@@ -63,9 +66,9 @@ public class PlayerHealthBar : MonoBehaviour
 
     void OnGUI()
     {
-        int posX = 10;
-        int posY = 10;
-        int height = 15;
+        int posX = PosX;//10;
+        int posY = PosY;// 10;
+        int height = PosHeight;// 15;
 
         float previousAdjustValue = (previousHealth * healthBarWidth) / maxHP;
         float percentage = healthBarWidth * (curHP / maxHP);
@@ -89,7 +92,7 @@ public class PlayerHealthBar : MonoBehaviour
         else if (curHP < maxHP)
         {
 
-            if (percentage <= 50  percentage >= 25){
+            if (percentage <= 50  && percentage >= 25){
                 HUDSkin.normal.textColor = Color.yellow;
                 HUDSkin.fontStyle = FontStyle.BoldAndItalic;
                 HUDSkin.fontSize = 16;
