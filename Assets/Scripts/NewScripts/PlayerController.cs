@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 appliedAngularForce = Vector3.zero;
 
     public Joystick Hor, Ver, Acc, Steer;
+    public float StabalizeSpeed;
 
     void Start()
     {
@@ -134,10 +135,10 @@ public class PlayerController : MonoBehaviour
 
     void movement4(float x, float y, float z)
     {
-        rb.transform.Rotate((-y * multiplier)/2, (x * multiplier)/2, 0);
+        rb.transform.Rotate((-y * multiplier) / 2, (x * multiplier) / 2, 0);
 
         xAxis.text = Acc.Vertical.ToString();
-        
+
     }
 
     public void BoostPlayer()
@@ -176,5 +177,19 @@ public class PlayerController : MonoBehaviour
         yAxis.text = remapVal.ToString();
 
         rb.velocity = transform.forward * Time.deltaTime * remapVal * force;
+    }
+
+    public void stabalize()
+    {
+        //Vector3 
+        //Vector3 smoothLevel = Vector3.Lerp((transform.eulerAngles.z), 0, StabalizeSpeed * Time.deltaTime);
+        //Quaternion rot = Quaternion.Euler(transform.rotation.x, transform.rotation.y, 0); //convert offset to Quaternion then multiply instead of add to do offset
+        //transform.rotation = Quaternion.Slerp(transform.rotation, rot, StabalizeSpeed * Time.deltaTime); //
+
+
+        //transform.rotation = Quaternion.Euler((transform.eulerAngles.x),(transform.eulerAngles.y),(Mathf.Lerp(transform.eulerAngles.z, 0f,0.5f)));
+
+        Quaternion stable = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, 0f);
+        transform.rotation = Quaternion.Slerp(transform.rotation, stable, StabalizeSpeed * Time.deltaTime);
     }
 }
