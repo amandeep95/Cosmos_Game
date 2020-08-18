@@ -4,14 +4,22 @@ using UnityEngine.EventSystems;
 public class FixedJoystick : Joystick
 {
     Vector2 joystickPosition = Vector2.zero;
+    public Vector2 startpos;
     private Camera cam = new Camera();
 
     //adding boolean to check if the joystick should stay in its place
-    public bool FreezeJoystickPos;
+    public bool FreezeJoystickPos, choosePosition;
 
     void Start()
     {
-        joystickPosition = RectTransformUtility.WorldToScreenPoint(cam, background.position);
+        if (choosePosition)
+        {
+            //joystickPosition = RectTransformUtility.WorldToScreenPoint(cam, startpos);
+        }
+        else
+        {
+            //joystickPosition = RectTransformUtility.WorldToScreenPoint(cam, background.position);
+        }
     }
 
     public override void OnDrag(PointerEventData eventData)

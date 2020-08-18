@@ -154,41 +154,47 @@ public class PlayerController : MonoBehaviour
 
     void accelerate()
     {
-        //Vector3 dir = pointingTo.transform.position - rb.transform.position;
-        //rb.velocity = transform.forward * Time.deltaTime * force;//Vector3.forward * force;
-        float remapVal;
 
-        if (Acc.Vertical <= -0.5f)
+        float remappedAccelerator = Mathf.Clamp(Acc.Vertical, 1,10);
+
+        float remapVal = Acc.Vertical;// * 3;
+
+        //if (Acc.Vertical <= -0.5f)
+        //{
+        //    remapVal = -2;
+        //}
+        //else if (Acc.Vertical <= 0)
+        //{
+        //    remapVal = 1.5f;
+        //}
+        //else if (Acc.Vertical <= 0.5f)
+        //{
+        //    remapVal = 2f;
+        //}
+        //else
+        //{
+        //    remapVal = 3.5f;
+        //}
+
+        if (Acc.Vertical > -0.6f && Acc.Vertical < -0.5f)
         {
-            remapVal = -2;
-        }
-        else if (Acc.Vertical <= 0)
+            remapVal = 0;
+        } else if (Acc.Vertical > -0.5f)
         {
-            remapVal = 1.5f;
-        }
-        else if (Acc.Vertical <= 0.5f)
+            remapVal = Mathf.Clamp(Acc.Vertical, 1, 10);
+        } else if (Acc.Vertical < -0.6f)
         {
-            remapVal = 2f;
+            remapVal = Mathf.Clamp(Acc.Vertical, -4, -1);
         }
-        else
-        {
-            remapVal = 3.5f;
-        }
+
         yAxis.text = remapVal.ToString();
+
 
         rb.velocity = transform.forward * Time.deltaTime * remapVal * force;
     }
 
     public void stabalize()
     {
-        //Vector3 
-        //Vector3 smoothLevel = Vector3.Lerp((transform.eulerAngles.z), 0, StabalizeSpeed * Time.deltaTime);
-        //Quaternion rot = Quaternion.Euler(transform.rotation.x, transform.rotation.y, 0); //convert offset to Quaternion then multiply instead of add to do offset
-        //transform.rotation = Quaternion.Slerp(transform.rotation, rot, StabalizeSpeed * Time.deltaTime); //
-
-
-        //transform.rotation = Quaternion.Euler((transform.eulerAngles.x),(transform.eulerAngles.y),(Mathf.Lerp(transform.eulerAngles.z, 0f,0.5f)));
-
         Quaternion stable = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, 0f);
         transform.rotation = Quaternion.Slerp(transform.rotation, stable, StabalizeSpeed * Time.deltaTime);
     }
