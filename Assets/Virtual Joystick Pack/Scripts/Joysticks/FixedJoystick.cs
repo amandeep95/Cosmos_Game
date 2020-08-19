@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
 public class FixedJoystick : Joystick
 {
     Vector2 joystickPosition = Vector2.zero;
+    public Vector2 newZeroStartPoint;
     public Vector2 startpos;
     private Camera cam = new Camera();
 
@@ -14,13 +15,21 @@ public class FixedJoystick : Joystick
     {
         if (choosePosition)
         {
-            //joystickPosition = RectTransformUtility.WorldToScreenPoint(cam, startpos);
+
+            handle.anchoredPosition = startpos;
+            inputVector = newZeroStartPoint;
         }
         else
         {
-            //joystickPosition = RectTransformUtility.WorldToScreenPoint(cam, background.position);
+            handle.anchoredPosition = (inputVector * background.sizeDelta.x / 2f) * handleLimit;
         }
+
+
+        joystickPosition = RectTransformUtility.WorldToScreenPoint(cam, background.position);
+        //print(joystickPosition);
     }
+
+
 
     public override void OnDrag(PointerEventData eventData)
     {
@@ -42,5 +51,12 @@ public class FixedJoystick : Joystick
             inputVector = Vector2.zero;
             handle.anchoredPosition = Vector2.zero;
         }
+        else
+        {
+
+            //print("uptrue");
+        }
     }
+
+    
 }

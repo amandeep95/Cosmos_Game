@@ -26,6 +26,8 @@ public class PlayerController : MonoBehaviour
 
     public Joystick Hor, Ver, Acc, Steer;
     public float StabalizeSpeed;
+    public float minSpeed, maxSpeed, minSpeed_rev, maxSpeed_rev;
+    public bool canReverse;
 
     void Start()
     {
@@ -159,32 +161,21 @@ public class PlayerController : MonoBehaviour
 
         float remapVal = Acc.Vertical;// * 3;
 
-        //if (Acc.Vertical <= -0.5f)
-        //{
-        //    remapVal = -2;
-        //}
-        //else if (Acc.Vertical <= 0)
-        //{
-        //    remapVal = 1.5f;
-        //}
-        //else if (Acc.Vertical <= 0.5f)
-        //{
-        //    remapVal = 2f;
-        //}
-        //else
-        //{
-        //    remapVal = 3.5f;
-        //}
+        
 
-        if (Acc.Vertical > -0.6f && Acc.Vertical < -0.5f)
+        if (Acc.Vertical > -0.65f && Acc.Vertical < -0.45f)
         {
             remapVal = 0;
-        } else if (Acc.Vertical > -0.5f)
+            //rb.velocity = transform.forward * Time.deltaTime * force;
+        } else if (Acc.Vertical > -0.45f)
         {
-            remapVal = Mathf.Clamp(Acc.Vertical, 1, 10);
-        } else if (Acc.Vertical < -0.6f)
+            remapVal = Mathf.Lerp(minSpeed, maxSpeed, Mathf.InverseLerp(-0.45f, 1f, Acc.Vertical));
+        } else if ((Acc.Vertical < -0.65f) && canReverse)
         {
-            remapVal = Mathf.Clamp(Acc.Vertical, -4, -1);
+            remapVal = Mathf.Lerp(minSpeed_rev, maxSpeed_rev, Mathf.InverseLerp(-1f, -0.65f, Acc.Vertical));
+        } else
+        {
+            remapVal = 0;
         }
 
         yAxis.text = remapVal.ToString();
