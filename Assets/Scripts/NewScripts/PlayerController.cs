@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody rb;
-    public float force, baseForce;
+    public float force, addforce, baseForce;
     public float turnspeed;
 
     public bool mobile, pc, joystick, joystickAlt;
@@ -28,6 +28,9 @@ public class PlayerController : MonoBehaviour
     public float StabalizeSpeed;
     public float minSpeed, maxSpeed, minSpeed_rev, maxSpeed_rev;
     public bool canReverse;
+    public float slowDownLerp;
+
+    public TrailRenderer trail;
 
     void Start()
     {
@@ -161,27 +164,50 @@ public class PlayerController : MonoBehaviour
 
         float remapVal = Acc.Vertical;// * 3;
 
-        
+        float lastVal =0;
 
         if (Acc.Vertical > -0.65f && Acc.Vertical < -0.45f)
         {
-            remapVal = 0;
+            //remapVal = 0;
+            remapVal = Mathf.Lerp(lastVal, 0, slowDownLerp * Time.deltaTime);
             //rb.velocity = transform.forward * Time.deltaTime * force;
-        } else if (Acc.Vertical > -0.45f)
+            rb.AddForce(Vector3.forward * addforce);
+
+            trail.gameObject.SetActive(false);
+        }
+        else if (Acc.Vertical > -0.45f)
         {
             remapVal = Mathf.Lerp(minSpeed, maxSpeed, Mathf.InverseLerp(-0.45f, 1f, Acc.Vertical));
-        } else if ((Acc.Vertical < -0.65f) && canReverse)
+            lastVal = remapVal;
+
+            rb.velocity = transform.forward * Time.deltaTime * remapVal * force;
+
+            trail.gameObject.SetActive(true);
+        }
+        else if ((Acc.Vertical < -0.65f) && canReverse)
         {
             remapVal = Mathf.Lerp(minSpeed_rev, maxSpeed_rev, Mathf.InverseLerp(-1f, -0.65f, Acc.Vertical));
-        } else
+            lastVal = remapVal;
+
+            rb.velocity = transform.forward * Time.deltaTime * remapVal * force;
+
+            trail.gameObject.SetActive(true);
+        }
+        else
         {
-            remapVal = 0;
+            //remapVal = 0;
+            remapVal = Mathf.Lerp(lastVal, 0, slowDownLerp * Time.deltaTime);
+
+            rb.AddForce(Vector3.forward * addforce);
+
+            trail.gameObject.SetActive(false);
         }
 
         yAxis.text = remapVal.ToString();
 
 
-        rb.velocity = transform.forward * Time.deltaTime * remapVal * force;
+        //rb.velocity = transform.forward * Time.deltaTime * remapVal * force;
+        //rb.velocity = transform.forward * force * Time.deltaTime;
     }
 
     public void stabalize()

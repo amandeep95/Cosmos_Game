@@ -42,41 +42,24 @@ public class CameraFollow : MonoBehaviour
     {
         Vector3 DesiredPos = camPoint.position;
 
-        //Vector3 DesiredRot = camPoint.eulerAngles;// + offsetRot;
-        //print(DesiredRot);
+        
 
         Vector3 smoothPos = Vector3.Lerp(transform.position, DesiredPos, smoothSpeed * Time.deltaTime);
 
         //Vector3 smoothRot = Vector3.Lerp(transform.eulerAngles, DesiredRot, smoothSpeed * Time.deltaTime);
 
-        //Vector3 euler = transform.eulerAngles;//new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z);
-        //Vector3 level = new Vector3(target.eulerAngles.x, target.eulerAngles.y, target.eulerAngles.z);
-        //print(level);
+        
         Vector3 smoothLevel = Vector3.Lerp((transform.eulerAngles), (target.eulerAngles + offsetRot), smoothSpeed * Time.deltaTime);
 
-        //if (transform.eulerAngles.z != 180)
-        //{
-        //    transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, 180f);
-        //}
+        
 
 
         transform.position = smoothPos;
-        //transform.eulerAngles = smoothLevel;
-        //transform.eulerAngles = (new Vector3(transform.eulerAngles.x, transform.eulerAngles.y,transform.eulerAngles.z)) + offsetRot;
-
-
 
         Quaternion rot = Quaternion.Euler(offsetRot.x,offsetRot.y,offsetRot.z); //convert offset to Quaternion then multiply instead of add to do offset
         transform.rotation = Quaternion.Slerp(transform.rotation, (target.rotation * rot), smoothSpeed * Time.deltaTime); //
 
-
-
-
-
-
-
-
-        //transform.LookAt(target); //dont use
+        
     }
 }
 
