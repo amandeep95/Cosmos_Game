@@ -160,11 +160,11 @@ public class PlayerController : MonoBehaviour
     void accelerate()
     {
 
-        float remappedAccelerator = Mathf.Clamp(Acc.Vertical, 1,10);
+        float remappedAccelerator = Mathf.Clamp(Acc.Vertical, 1, 10);
 
         float remapVal = Acc.Vertical;// * 3;
 
-        float lastVal =0;
+        float lastVal = 0;
 
         if (Acc.Vertical > -0.65f && Acc.Vertical < -0.45f)
         {
@@ -174,6 +174,7 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(Vector3.forward * addforce);
 
             trail.gameObject.SetActive(false);
+            unfreezeRot();
         }
         else if (Acc.Vertical > -0.45f)
         {
@@ -183,6 +184,7 @@ public class PlayerController : MonoBehaviour
             rb.velocity = transform.forward * Time.deltaTime * remapVal * force;
 
             trail.gameObject.SetActive(true);
+            freezeRot();
         }
         else if ((Acc.Vertical < -0.65f) && canReverse)
         {
@@ -192,6 +194,7 @@ public class PlayerController : MonoBehaviour
             rb.velocity = transform.forward * Time.deltaTime * remapVal * force;
 
             trail.gameObject.SetActive(true);
+            freezeRot();
         }
         else
         {
@@ -201,6 +204,7 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(Vector3.forward * addforce);
 
             trail.gameObject.SetActive(false);
+            unfreezeRot();
         }
 
         yAxis.text = remapVal.ToString();
@@ -214,5 +218,16 @@ public class PlayerController : MonoBehaviour
     {
         Quaternion stable = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, 0f);
         transform.rotation = Quaternion.Slerp(transform.rotation, stable, StabalizeSpeed * Time.deltaTime);
+    }
+
+
+    public void freezeRot()
+    {
+        rb.constraints = RigidbodyConstraints.FreezeRotation;
+    }
+
+    public void unfreezeRot()
+    {
+        rb.constraints = RigidbodyConstraints.None;
     }
 }
