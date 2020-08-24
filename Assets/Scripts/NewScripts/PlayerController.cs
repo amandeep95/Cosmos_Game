@@ -171,24 +171,32 @@ public class PlayerController : MonoBehaviour
 
         float lastVal = 0;
 
-        if (Acc.Vertical > -0.65f && Acc.Vertical < -0.45f)
-        {
-            timeleft -= Time.deltaTime;
-            if (timeleft < 0)
-            {
-                //remapVal = Mathf.Lerp(lastVal, 0, slowDownLerp * Time.deltaTime);
-                rb.AddForce(Vector3.forward * addforce);
+        //if (Acc.Vertical > -0.65f && Acc.Vertical < -0.45f)
+        //{
+        //    //timeleft -= Time.deltaTime;
+        //    //if (timeleft < 0)
+        //    //{
+        //        remapVal = Mathf.Lerp(1, 0, slowDownLerp * Time.deltaTime);
+        //        //rb.AddForce(Vector3.forward * addforce);
 
-                trail.gameObject.SetActive(false);
-                unfreezeRot();
-            }
-            timeleft2 = baseTime2;
-        }
-        else if (Acc.Vertical > -0.45f)
+        //        trail.gameObject.SetActive(false);
+        //        unfreezeRot();
+        //    //}
+        //    timeleft2 = baseTime2;
+        //}
+        //else 
+        if (Acc.Vertical > -0.45f)
+
         {
-            timeleft2 -= Time.deltaTime;
-            if (timeleft2 <= 0)
-            {
+            //timeleft2 -= Time.deltaTime;
+            //if (timeleft2 <= 0)
+            //{
+
+
+            //remapVal = Mathf.Lerp(0, 1, slowDownLerp * Time.deltaTime);
+
+            //if (remapVal == 1) {
+
                 remapVal = Mathf.Lerp(minSpeed, maxSpeed, Mathf.InverseLerp(-0.45f, 1f, Acc.Vertical));
                 lastVal = remapVal;
 
@@ -196,15 +204,15 @@ public class PlayerController : MonoBehaviour
 
                 trail.gameObject.SetActive(true);
                 freezeRot();
-
-            }
+            //}
+            //}
             timeleft = baseTime;
         }
         else if ((Acc.Vertical < -0.65f) && canReverse)
         {
-            timeleft2 -= Time.deltaTime;
-            if (timeleft2 <= 0)
-            {
+            //timeleft2 -= Time.deltaTime;
+            //if (timeleft2 <= 0)
+            //{
                 remapVal = Mathf.Lerp(minSpeed_rev, maxSpeed_rev, Mathf.InverseLerp(-1f, -0.65f, Acc.Vertical));
                 lastVal = remapVal;
 
@@ -213,21 +221,23 @@ public class PlayerController : MonoBehaviour
                 trail.gameObject.SetActive(true);
                 freezeRot();
 
-            }
+            //}
             timeleft = baseTime;
         }
         else
         {
-            timeleft -= Time.deltaTime;
-            if (timeleft <= 0)
-            {
-                //remapVal = Mathf.Lerp(lastVal, 0, slowDownLerp * Time.deltaTime);
+            //timeleft -= Time.deltaTime;
+            //if (timeleft <= 0)
+            //{
+                remapVal = Mathf.Lerp(1, 0, slowDownLerp * Time.deltaTime);
 
-                rb.AddForce(Vector3.forward * addforce);
+                //remapVal = Mathf.Lerp(0, 0, Mathf.InverseLerp(-0.45f, 1f, Acc.Vertical));
+
+                //rb.AddForce(Vector3.forward * addforce);
 
                 trail.gameObject.SetActive(false);
                 unfreezeRot();
-            }
+            //}
             timeleft2 = baseTime2;
 
         }
