@@ -32,6 +32,9 @@ public class PlayerController : MonoBehaviour
 
     public TrailRenderer trail;
 
+    public float timeleft, timeleft2;
+    float baseTime,baseTime2;
+
     void Start()
     {
         //rb = transform.GetChild(0).GetComponent<Rigidbody>();//get rb of first child element
@@ -40,6 +43,8 @@ public class PlayerController : MonoBehaviour
         //Boost.onClick.AddListener(BoostPlayer);
 
         baseForce = force;
+        baseTime = timeleft;
+        baseTime2 = timeleft2;
     }
 
     // Update is called once per frame
@@ -168,47 +173,67 @@ public class PlayerController : MonoBehaviour
 
         if (Acc.Vertical > -0.65f && Acc.Vertical < -0.45f)
         {
-            //remapVal = 0;
-            remapVal = Mathf.Lerp(lastVal, 0, slowDownLerp * Time.deltaTime);
-            //rb.velocity = transform.forward * Time.deltaTime * force;
-            rb.AddForce(Vector3.forward * addforce);
+            timeleft -= Time.deltaTime;
+            if (timeleft < 0)
+            {
+                //remapVal = Mathf.Lerp(lastVal, 0, slowDownLerp * Time.deltaTime);
+                rb.AddForce(Vector3.forward * addforce);
 
-            trail.gameObject.SetActive(false);
-            unfreezeRot();
+                trail.gameObject.SetActive(false);
+                unfreezeRot();
+            }
+            timeleft2 = baseTime2;
         }
         else if (Acc.Vertical > -0.45f)
         {
-            remapVal = Mathf.Lerp(minSpeed, maxSpeed, Mathf.InverseLerp(-0.45f, 1f, Acc.Vertical));
-            lastVal = remapVal;
+            timeleft2 -= Time.deltaTime;
+            if (timeleft2 <= 0)
+            {
+                remapVal = Mathf.Lerp(minSpeed, maxSpeed, Mathf.InverseLerp(-0.45f, 1f, Acc.Vertical));
+                lastVal = remapVal;
 
-            rb.velocity = transform.forward * Time.deltaTime * remapVal * force;
+                rb.velocity = transform.forward * Time.deltaTime * remapVal * force;
 
-            trail.gameObject.SetActive(true);
-            freezeRot();
+                trail.gameObject.SetActive(true);
+                freezeRot();
+
+            }
+            timeleft = baseTime;
         }
         else if ((Acc.Vertical < -0.65f) && canReverse)
         {
-            remapVal = Mathf.Lerp(minSpeed_rev, maxSpeed_rev, Mathf.InverseLerp(-1f, -0.65f, Acc.Vertical));
-            lastVal = remapVal;
+            timeleft2 -= Time.deltaTime;
+            if (timeleft2 <= 0)
+            {
+                remapVal = Mathf.Lerp(minSpeed_rev, maxSpeed_rev, Mathf.InverseLerp(-1f, -0.65f, Acc.Vertical));
+                lastVal = remapVal;
 
-            rb.velocity = transform.forward * Time.deltaTime * remapVal * force;
+                rb.velocity = transform.forward * Time.deltaTime * remapVal * force;
 
-            trail.gameObject.SetActive(true);
-            freezeRot();
+                trail.gameObject.SetActive(true);
+                freezeRot();
+
+            }
+            timeleft = baseTime;
         }
         else
         {
-            //remapVal = 0;
-            remapVal = Mathf.Lerp(lastVal, 0, slowDownLerp * Time.deltaTime);
+            timeleft -= Time.deltaTime;
+            if (timeleft <= 0)
+            {
+                //remapVal = Mathf.Lerp(lastVal, 0, slowDownLerp * Time.deltaTime);
 
-            rb.AddForce(Vector3.forward * addforce);
+                rb.AddForce(Vector3.forward * addforce);
 
-            trail.gameObject.SetActive(false);
-            unfreezeRot();
+                trail.gameObject.SetActive(false);
+                unfreezeRot();
+            }
+            timeleft2 = baseTime2;
+
         }
 
         yAxis.text = remapVal.ToString();
-
+        zAxis.text = rb.velocity.ToString();
 
         //rb.velocity = transform.forward * Time.deltaTime * remapVal * force;
         //rb.velocity = transform.forward * force * Time.deltaTime;
