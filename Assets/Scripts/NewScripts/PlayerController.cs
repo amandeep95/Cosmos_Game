@@ -264,5 +264,12 @@ public class PlayerController : MonoBehaviour
     public void unfreezeRot()
     {
         rb.constraints = RigidbodyConstraints.None;
+
+        //if (Steer.Vertical == 0 && Steer.Horizontal == 0)
+        //{
+
+
+        //    transform.forward = Vector3.Lerp((transform.eulerAngles), rb.velocity, 0.5f);
+        //}
     }
 }
