@@ -9,13 +9,19 @@ public class GenerateLevel : MonoBehaviour
     public int maxPlatforms;// = 15;
     public int deliveries;
 
-    private List<Platform> platforms = new List<Platform>();
+    private List<GameObject> platforms = new List<GameObject>();
+    public GameObject plat1, plat2, plat3, plat4;
 
 
     // Start is called before the first frame update
     void Start()
     {
         transform.position = Base.transform.position;
+
+        platforms.Add(plat1);
+        platforms.Add(plat2);
+        platforms.Add(plat3);
+        platforms.Add(plat4);
 
         maxPlatforms = Random.RandomRange(15, 20);
 
@@ -46,9 +52,11 @@ public class GenerateLevel : MonoBehaviour
         float xPos = Random.RandomRange(Random.RandomRange(-600, -100), Random.RandomRange(100, 600));
         float yPos = Random.RandomRange(Random.RandomRange(-600, -100), Random.RandomRange(100, 600));
         float zPos = Random.RandomRange(Random.RandomRange(-600, -100), Random.RandomRange(100, 600));
+        int platnum = Random.RandomRange(1,4);
         //Instantiate(platforms[i], new Vector3(xPos, yPos, zPos));//, platform[i].transform.rotation * new Vector3(0,yRot,0));
         Vector3 newPos = new Vector3(xPos, yPos, zPos);
-        GameObject plat = Instantiate(neighbourhood, newPos, Quaternion.Euler(0, yRot, 0));//, platform[i].transform.rotation * new Vector3(0,yRot,0));
+        //GameObject plat = Instantiate(neighbourhood, newPos, Quaternion.Euler(0, yRot, 0));//, platform[i].transform.rotation * new Vector3(0,yRot,0));
+        GameObject plat = Instantiate(platforms[platnum], newPos, Quaternion.Euler(0, yRot, 0));//, platform[i].transform.rotation * new Vector3(0,yRot,0));
         TurnonDelivery(plat, i);
         //print("new Platform made");
         //}
@@ -65,13 +73,13 @@ public class GenerateLevel : MonoBehaviour
     }
 
 
-    public struct Platform
-    {
-        public Vector3 position;
+    //public struct Platform
+    //{
+    //    public Vector3 position;
 
-        public Platform(Vector3 pos)
-        {
-            position = pos;
-        }
-    }
+    //    public Platform(Vector3 pos)
+    //    {
+    //        position = pos;
+    //    }
+    //}
 }
