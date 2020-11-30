@@ -49,9 +49,9 @@ public class GenerateLevel : MonoBehaviour
         //int j = i;
         //if (platforms[i-1].position.x != null) {
         float yRot = Random.RandomRange(0, 360);
-        float xPos = Random.RandomRange(Random.RandomRange(-600, -100), Random.RandomRange(100, 600));
-        float yPos = Random.RandomRange(Random.RandomRange(-600, -100), Random.RandomRange(100, 600));
-        float zPos = Random.RandomRange(Random.RandomRange(-600, -100), Random.RandomRange(100, 600));
+        float xPos = Random.RandomRange(Random.RandomRange(-700, -100), Random.RandomRange(100, 700));
+        float yPos = Random.RandomRange(Random.RandomRange(-700, -100), Random.RandomRange(100, 700));
+        float zPos = Random.RandomRange(Random.RandomRange(-700, -100), Random.RandomRange(100, 700));
         int platnum = Random.RandomRange(1,4);
         //Instantiate(platforms[i], new Vector3(xPos, yPos, zPos));//, platform[i].transform.rotation * new Vector3(0,yRot,0));
         Vector3 newPos = new Vector3(xPos, yPos, zPos);
