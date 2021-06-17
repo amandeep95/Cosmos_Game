@@ -29,7 +29,7 @@ public class GenerateLevel : MonoBehaviour
         {
             makeNewPlatform(i);
             
-            print("loop");
+            //print("loop");
         }
         //Destroy(this);
     }

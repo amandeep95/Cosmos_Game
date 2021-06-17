@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DeliverySystem : MonoBehaviour
 {
+    public string order; //order will be used by another script to provide the text of level order
     public GameObject dialogue, controls;
     // Start is called before the first frame update
     void Awake()

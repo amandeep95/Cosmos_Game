@@ -8,6 +8,8 @@ public class FixedJoystick : Joystick
     public Vector2 startpos;
     private Camera cam = new Camera();
 
+
+
     //adding boolean to check if the joystick should stay in its place
     public bool FreezeJoystickPos, choosePosition;
 

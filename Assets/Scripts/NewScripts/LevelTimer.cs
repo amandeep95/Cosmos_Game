@@ -15,6 +15,7 @@ public class LevelTimer : MonoBehaviour
     void Start()
     {
         timerrunning = true;
+        timer *= 60;
     }
 
     // Update is called once per frame
@@ -23,6 +24,7 @@ public class LevelTimer : MonoBehaviour
         if (timerrunning)
         {
             StartTimer();
+            //print("TimeIsRunning");
         }
 
 
@@ -44,8 +46,8 @@ public class LevelTimer : MonoBehaviour
 
     void StartTimer()
     {
-        timer += Time.deltaTime;
-        time.text = timer.ToString("F2");
+        timer -= Time.deltaTime;
+        time.text = "Time: " + timer.ToString("F2");
         CurrTimer = timer;
     }
 
